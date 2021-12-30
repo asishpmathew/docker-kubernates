@@ -8,16 +8,14 @@ const client = redis.createClient({
     ports : 6379
 })
 
-client.set("visits", 0)
-
 app.get("/", (req, res) =>{
     
     client.get("visits",(err, visits) =>{
         res.send(" Number of vists"+ visits)
-        if(parseInt(visits) ==1) {
-            process.exit(0)
-        }
         client.set("visits", parseInt(visits)+1)
+        if(parseInt(visits) ==1) {
+                    process.exit(400)
+        }
     } )
 })
 
